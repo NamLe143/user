@@ -8,15 +8,22 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponent implements OnInit {
   isActive = false;
   listUser = [];
+  userCurrent = {};
   constructor() {
   }
   ngOnInit() {
   }
   viewUser($event) {
+    
+    
     if ($event && $event.length) {
       this.isActive = true;
-      this.listUser = $event
+      this.listUser = $event;
     }
+  }
+  editUser(user) {
+    this.userCurrent = user;
+    console.log(this.userCurrent);
   }
 
 }
