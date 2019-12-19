@@ -9,21 +9,24 @@ export class UserComponent implements OnInit {
   isActive = false;
   listUser = [];
   userCurrent = {};
+  isEdit = false;
   constructor() {
-  }
+  };
   ngOnInit() {
-  }
+  };
   viewUser($event) {
-    
-    
-    if ($event && $event.length) {
-      this.isActive = true;
-      this.listUser = $event;
-    }
-  }
-  editUser(user) {
-    this.userCurrent = user;
-    console.log(this.userCurrent);
+    if (this.isEdit) {
+      this.listUser.forEach((item, index) => {
+          this.listUser[index] = item.id === $event.id ? $event : this.listUser[index];
+      });
+    } else {
+        this.isActive = $event && $event.length ? true : false;
+        this.listUser = $event && $event.length ? $event : '';
+    };
+  };
+  editUser(user) {    
+    this.isEdit = true;
+    this.userCurrent = JSON.parse(JSON.stringify(user));
   }
 
 }

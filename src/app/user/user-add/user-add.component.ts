@@ -8,23 +8,39 @@ import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges, OnChange
 export class UserAddComponent implements OnInit, OnChanges {
   listUser = [];
   user = {
+    id: null,
     name: '',
     age: null,
     address: '',
     gender: '',
   };
+  actionEdit = false;
   @Output() displayUser = new EventEmitter();
-  @Input() power: {};
+  @Input() newUser: {};
+  @Input() detectEdit: {};
   constructor() { }
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    this.user = changes.power.currentValue ? changes.power.currentValue : '';
+    this.user = changes.newUser.currentValue ? changes.newUser.currentValue : '';
+    this.actionEdit = changes.detectEdit.currentValue ? changes.detectEdit.currentValue : false;
   }
   ngOnInit() {
   }
   
-  userAdd() {    
-    this.listUser.push(JSON.parse(JSON.stringify(this.user)));
-    this.displayUser.emit(this.listUser);
+  submit() {
+    if (this.actionEdit) {
+      this.displayUser.emit(this.user);
+    } else {
+      this.user.id = this.listUser.length + 1;
+      this.listUser.push(this.user);
+      this.displayUser.emit(this.listUser);
+    }
+    this.user = {
+      id: null,
+      name: '',
+      age: null,
+      address: '',
+      gender: '',
+    };
   }
 }
