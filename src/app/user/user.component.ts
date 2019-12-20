@@ -9,11 +9,11 @@ export class UserComponent implements OnInit {
   isActive = false;
   listUser = [];
   userCurrent = {};
-  isEdit = false;
+  isEdit = null;
   constructor() {
-  };
+  }
   ngOnInit() {
-  };
+  }
   viewUser($event) {
     if (this.isEdit) {
       this.listUser.forEach((item, index) => {
@@ -22,11 +22,18 @@ export class UserComponent implements OnInit {
     } else {
         this.isActive = $event && $event.length ? true : false;
         this.listUser = $event && $event.length ? $event : '';
-    };
-  };
-  editUser(user) {    
-    this.isEdit = true;
+    }
+  }
+  editUser(user) {
+    this.isEdit += 1 ;
     this.userCurrent = JSON.parse(JSON.stringify(user));
+  }
+  deleteUser(user) {
+    this.listUser.forEach((val, index) => {
+      if (val.id === user.id) {
+        this.listUser.splice(index, 1);
+      }
+    });
   }
 
 }
